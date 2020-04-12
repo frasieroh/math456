@@ -1,0 +1,8 @@
+__pycache__
+Stocks
+*.pyc
+*.csv
+*.swm
+*.swn
+*.swo
+*.swp
