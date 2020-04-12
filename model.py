@@ -18,7 +18,6 @@ class LSTM(nn.Module):
             self.output_size = input_size
         else:
             self.output_size = output_size
-        
         self.lstm = nn.LSTM(self.input_size, self.hidden_size)
         self.output_layer = nn.Linear(self.hidden_size, self.output_size)
 
@@ -60,3 +59,4 @@ if __name__ == "__main__":
             optimizer.step()
         print("Final prediction:")
         print(y_pred)
+

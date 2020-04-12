@@ -1,9 +1,11 @@
+# Python 3.7
+
 from model import LSTM
 
-import pandas as pd
 import torch
 import torch.nn as nn
 import torch.optim
+import pandas as pd
 
 def load_data(stocks):
     stock_data = None
@@ -60,12 +62,10 @@ if __name__ == "__main__":
     epoch_steps = 100
     epoch_gap = max_epochs // epoch_steps
     folds = 7
-
     # Automobile stocks: Toyota, Ford, Honda, Tata (lol)
     pd_data = load_data(["tm", "f", "hmc", "ttm"])
     known_days = pd_data.shape[0]
     num_features = pd_data.shape[1]
-
     all_results = []
     loss_fn = nn.MSELoss()
     for fold in range(folds):
@@ -113,7 +113,6 @@ if __name__ == "__main__":
             # Record results
             results.insert(step, step * epoch_gap, [loss_train.item(), loss_test.item()])
         all_results.append(results)
-
     # Write results to disk
     for fold in range(folds):
         all_results[fold].to_csv("fold-{}-results.csv".format(fold))
