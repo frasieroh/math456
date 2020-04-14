@@ -10,20 +10,22 @@ import torch.optim
 
 class LSTM(nn.Module):
     
-    def __init__(self, input_size, hidden_size, output_size=None):
+    def __init__(self, input_size, hidden_size, num_layers=1, dropout=0,  output_size=None):
         super().__init__()
         self.input_size  = input_size
         self.hidden_size = hidden_size
+        self.num_layers = num_layers
         if output_size is None:
             self.output_size = input_size
         else:
             self.output_size = output_size
-        self.lstm = nn.LSTM(self.input_size, self.hidden_size)
+        self.lstm = nn.LSTM(self.input_size, self.hidden_size, self.num_layers,
+                dropout=dropout)
         self.output_layer = nn.Linear(self.hidden_size, self.output_size)
 
     def init_hidden(self, batch_size):
-        return (torch.randn(1, batch_size, self.hidden_size),
-                torch.randn(1, batch_size, self.hidden_size))
+        return (torch.randn(self.num_layers, batch_size, self.hidden_size),
+                torch.randn(self.num_layers, batch_size, self.hidden_size))
 
     def forward(self, x):
         batch_size = x.size()[1]
